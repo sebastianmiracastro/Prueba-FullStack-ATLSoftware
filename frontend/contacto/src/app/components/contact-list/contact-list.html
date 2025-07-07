@@ -8,6 +8,7 @@
       <li *ngFor="let phone of contact.phones">📞 {{ phone }}</li>
     </ul>
     <button (click)="editContact(contact)">✏️ Editar</button>
+    <button (click)="deleteContact(contact.id)">🗑️ Eliminar</button>
   </li>
 </ul>
 

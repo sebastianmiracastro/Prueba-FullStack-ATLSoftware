@@ -28,4 +28,13 @@ export class ContactList implements OnInit {
   editContact(contact: Contact): void {
     this.contactService.setEditingContact(contact);
   }
+
+  /* Metodos para eliminar contacto */
+
+  deleteContact(id: number): void {
+    const confirmDelete = confirm('¿Estás seguro de eliminar este contacto?')
+    if(confirmDelete) {
+      this.contactService.deleteContact(id);
+    }
+  }
 }
