@@ -1,1 +1,57 @@
-<p>contact-form works!</p>
+<h2>Agregar Contacto</h2>
+
+<form [formGroup]="contactForm" (ngSubmit)="save()">
+  <div>
+    <label>Nombre:</label>
+    <input formControlName="firstName" />
+    <span
+      *ngIf="
+        contactForm.get('firstName')?.invalid &&
+        contactForm.get('firstName')?.touched
+      "
+    >
+      * Campo obligatorio
+    </span>
+  </div>
+
+  <div>
+    <label>Apellido:</label>
+    <input formControlName="lastName" />
+    <span
+      *ngIf="
+        contactForm.get('lastName')?.invalid &&
+        contactForm.get('lastName')?.touched
+      "
+    >
+      * Campo obligatorio
+    </span>
+  </div>
+
+  <div>
+    <label>Email:</label>
+    <input formControlName="email" />
+    <span
+      *ngIf="
+        contactForm.get('email')?.invalid && contactForm.get('email')?.touched
+      "
+    >
+      * Email inválido o vacío
+    </span>
+  </div>
+
+  <div formArrayName="phones">
+    <label>Teléfonos:</label>
+    <div *ngFor="let phone of phones.controls; let i = index">
+      <input [formControlName]="i" />
+      <button type="button" (click)="removePhone(i)" *ngIf="phones.length > 1">
+        ❌
+      </button>
+    </div>
+    <button type="button" (click)="addPhone()">➕ Añadir teléfono</button>
+  </div>
+
+  <div style="margin-top: 10px">
+    <button type="submit" [disabled]="contactForm.invalid">Guardar</button>
+    <button type="button" (click)="cancel()">Cancelar</button>
+  </div>
+</form>
