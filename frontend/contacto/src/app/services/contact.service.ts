@@ -36,6 +36,30 @@ export class ContactService {
   }
 
   addContact(contact: Contact) {
+    contact.id = this.getNextId();
     this.contacts.push(contact);
+    this.updateStorage();
+  }
+
+  updateContact(updated: Contact) {
+    const index = this.contacts.findIndex(c => c.id === updated.id);
+    if(index !== -1) {
+      this.contacts[index] = updated;
+      this.updateStorage();
+    }
+  }
+
+  deleteContact(id: number) {
+    this.contacts = this.contacts.filter(c => c.id !== id);
+    this.updateStorage();
+  }
+
+  private getNextId(): number {
+    return this.contacts.length > 0 ? Math.max(...this.contacts.map(c => c.id)) + 1 : 1;
+  }
+
+  private updateStorage() {
+    localStorage.setItem('contacts', JSON.stringify(this.contacts));
+    this.contactsSubject.next(this.contacts);
   }
 }
