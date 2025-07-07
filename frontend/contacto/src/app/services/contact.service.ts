@@ -11,6 +11,7 @@ import { tap } from 'rxjs/operators';
 export class ContactService {
   private contacts: Contact[] = [];
   private contactsSubject = new BehaviorSubject<Contact[]>([]);
+  private editingContactSubject = new BehaviorSubject<Contact | null>(null);
 
   constructor(private http: HttpClient) {}
 
@@ -62,4 +63,15 @@ export class ContactService {
     localStorage.setItem('contacts', JSON.stringify(this.contacts));
     this.contactsSubject.next(this.contacts);
   }
+
+  /* Metodo para editar contactos */
+
+  setEditingContact(contact: Contact | null) {
+    this.editingContactSubject.next(contact);
+  }
+
+  getEditingContact(): Observable<Contact | null > {
+    return this.editingContactSubject.asObservable();
+  }
+
 }

@@ -22,4 +22,10 @@ export class ContactList implements OnInit {
 
       this.contacts$ = this.contactService.getContacts();
   }
+
+  /* Metodos para editar contacto */
+
+  editContact(contact: Contact): void {
+    this.contactService.setEditingContact(contact);
+  }
 }
