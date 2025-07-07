@@ -21,7 +21,7 @@ export class ContactService {
       this.contactsSubject.next(this.contacts);
       return of(this.contacts);
     } else {
-      return this.http.get<Contact[]>('assets/contacts.json').pipe(
+      return this.http.get<Contact[]>('/contacts.json').pipe(
         tap(data => {
           this.contacts = data;
           this.contactsSubject.next(this.contacts);

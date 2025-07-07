@@ -1,11 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ContactService } from '../../services/contact.service';
+import { Contact } from '../../models/contact.model';
+import { Observable } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-contact-list',
-  imports: [],
   templateUrl: './contact-list.html',
-  styleUrl: './contact-list.scss'
+  styleUrl: './contact-list.scss',
+  standalone: true,
+  imports: [CommonModule],
 })
-export class ContactList {
 
+export class ContactList implements OnInit {
+  contacts$!: Observable<Contact[]>;
+
+  constructor(private contactService: ContactService) {}
+
+  ngOnInit(): void {
+      this.contactService.loadContacts().subscribe();
+
+      this.contacts$ = this.contactService.getContacts();
+  }
 }

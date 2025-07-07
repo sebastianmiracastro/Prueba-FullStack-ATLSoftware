@@ -1,1 +1,15 @@
-<p>contact-list works!</p>
+<h2>Lista de Contactos</h2>
+
+<ul *ngIf="contacts$ | async as contacts; else loading">
+  <li *ngFor="let contact of contacts">
+    <strong>{{ contact.firstName }} {{ contact.lastName }}</strong> -
+    {{ contact.email }}
+    <ul>
+      <li *ngFor="let phone of contact.phones">📞 {{ phone }}</li>
+    </ul>
+  </li>
+</ul>
+
+<ng-template #loading>
+  <p>Cargando contactos...</p>
+</ng-template>
